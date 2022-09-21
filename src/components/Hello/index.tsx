@@ -12,14 +12,9 @@ const Hello = () => {
   const props: UploadProps = {
     name: 'file',
     multiple: true,
-    beforeUpload: (info: any, filelist: any) => {
-      if (filelist[filelist.length - 1] == info) {
-        const test = filelist.map((file: File, index: number) => {
-          console.log(index);
-          return <CustomUpload file={file} key={index} />;
-        });
-        setFileList((pre: ReactNode[]) => [...pre, test]);
-      }
+    beforeUpload: (info: any) => {
+      setFileList((pre: ReactNode[]) => [...pre, <CustomUpload file={info} key={info.name} />]);
+      return false;
     },
     itemRender: () => null,
   };
