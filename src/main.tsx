@@ -5,11 +5,10 @@ import App from './App';
 import Store from './redux/store';
 // styles
 import './index.css';
+import 'antd/dist/antd.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Provider store={Store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={Store}>
+    <App />
+  </Provider>,
 );
