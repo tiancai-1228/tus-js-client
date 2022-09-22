@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 function index() {
   const history = useHistory();
   return (
-    <div>
+    <div className='flex flex-col justify-center items-center h-screen'>
       <Button
         type='primary'
         shape='round'
