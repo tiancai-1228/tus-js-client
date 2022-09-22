@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as tus from 'tus-js-client';
 import { Progress, Button } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
+import { usePrompt } from '../hook/usePrompt';
 
 interface uploadProps {
   file: File;
@@ -11,11 +12,28 @@ interface uploadProps {
 function customUpload({ file }: uploadProps) {
   const [downloadData, setDownloadData] = useState<any>();
   const [progressData, setProgressData] = useState(0);
+  const { setWhen, setMessage } = usePrompt(
+    () => {
+      handleOnOk();
+    },
+    () => {
+      handleOnCancel();
+    },
+  );
+
+  const handleOnOk = () => {
+    console.log('handleOnOk');
+  };
+  const handleOnCancel = () => {
+    console.log('handleOnCancel');
+  };
 
   useEffect(() => {
     if (!file) {
       return;
     }
+    setMessage('尚未下載完成是否確定要離開');
+    setWhen(true);
     const endpoint = 'https://tusd.tusdemo.net/files/';
     const options = {
       endpoint: endpoint,
@@ -32,6 +50,7 @@ function customUpload({ file }: uploadProps) {
       },
       onSuccess: function () {
         setDownloadData(upload.url);
+        setWhen(false);
       },
     };
     const upload = new tus.Upload(file, options);
